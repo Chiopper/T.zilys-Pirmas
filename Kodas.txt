@@ -96,6 +96,25 @@ namespace Praktinis3
         {
             this.viso_grazinti = this.sutarties_pasirasimo_mokestis + this.paskolos_suma + ((this.paskolos_suma / 100 * this.paskolos_palukanos)/* * this.grazinimo_laikotarpis*/);
         }
+
+	public bool pimras()                           
+        {
+            if (this.vaiku_skaicius < 0 || this.vaiku_skaicius > 10)
+            { return true; }
+            else { return false; }
+        }
+
+        public bool antras()                          
+        {
+            if (this.vaiko_islaikimas <= 0 && this.vaiku_skaicius > 1)
+            { return true; }
+            else { return false; }
+        }
+
+
+
+
+
         private int pradiniuDuomenuTikrinimas(int paskolosTipas)
         {
 
