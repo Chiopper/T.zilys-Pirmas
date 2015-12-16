@@ -126,7 +126,19 @@ namespace Praktinis3
             else { return false; }
         }
 
+	   public bool penktas()
+        {
+            if (this.seimos_skolos < 0 || this.seimos_skolos > 15000)
+            { return true; }
+            else { return false; }
+        }
 
+        public bool sestas()
+        {
+            if (this.paskolos_suma < 1)
+            { return true; }
+            else { return false; }
+        }
 
 
 
