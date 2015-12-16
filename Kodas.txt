@@ -112,6 +112,21 @@ namespace Praktinis3
         }
 
 
+	 public bool trecias()
+        {
+            if (this.vaiko_islaikimas >= 1 && this.vaiku_skaicius == 0)
+            { return true; }
+            else { return false; }
+        }
+
+        public bool ketvirtas()
+        {
+            if (this.seimos_pajamos < 0 || this.seimos_pajamos > 30000)
+            { return true; }
+            else { return false; }
+        }
+
+
 
 
 
