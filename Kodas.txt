@@ -140,6 +140,28 @@ namespace Praktinis3
             else { return false; }
         }
 
+	  public bool septintas()
+        {
+            if (this.paskolos_palukanos < 0 || this.paskolos_palukanos > 100)
+            { return true; }
+            else { return false; }
+        }
+
+        public bool astuntas()
+        {
+            if (this.pastato_amzius > 40)
+            { return true; }
+            else { return false; }
+        }
+
+        public bool devintas()
+        {
+            if ((this.tikros_pajamos * 0.4) < this.menesineImoka())
+            { return true; }
+            else { return false; }
+        }
+
+
 
 
         private int pradiniuDuomenuTikrinimas(int paskolosTipas)
