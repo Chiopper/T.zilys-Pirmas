@@ -13,8 +13,8 @@ namespace Praktinis3
     public partial class Form1 : Form
     {
 
-        int Vaiku_sk;
-        double Vaiko_islaikymas;
+        int vaiku_skaicius;
+        double vaiko_islaikimas;
         double seimos_pajamos;
         double seimos_skolos;
         double paskolos_suma;
@@ -89,7 +89,7 @@ namespace Praktinis3
         }
         private void liekaPajamu()
         {
-            this.tikros_pajamos = this.seimos_pajamos - (this.Vaiku_sk * this.Vaiko_islaikymas) - this.seimos_skolos;
+            this.tikros_pajamos = this.seimos_pajamos - (this.vaiku_skaicius * this.vaiko_islaikimas) - this.seimos_skolos;
             label25.Text = "" + this.tikros_pajamos;
         }
         private void metinesPalukanosSuma()
@@ -97,7 +97,7 @@ namespace Praktinis3
             this.viso_grazinti = this.sutarties_pasirasimo_mokestis + this.paskolos_suma + ((this.paskolos_suma / 100 * this.paskolos_palukanos)/* * this.grazinimo_laikotarpis*/);
         }
 
-	public bool pimras()                           
+        public bool pimras()                           
         {
             if (this.vaiku_skaicius < 0 || this.vaiku_skaicius > 10)
             { return true; }
@@ -111,8 +111,7 @@ namespace Praktinis3
             else { return false; }
         }
 
-
-	 public bool trecias()
+        public bool trecias()
         {
             if (this.vaiko_islaikimas >= 1 && this.vaiku_skaicius == 0)
             { return true; }
@@ -126,7 +125,7 @@ namespace Praktinis3
             else { return false; }
         }
 
-	   public bool penktas()
+        public bool penktas()
         {
             if (this.seimos_skolos < 0 || this.seimos_skolos > 15000)
             { return true; }
@@ -140,7 +139,7 @@ namespace Praktinis3
             else { return false; }
         }
 
-	  public bool septintas()
+        public bool septintas()
         {
             if (this.paskolos_palukanos < 0 || this.paskolos_palukanos > 100)
             { return true; }
@@ -164,10 +163,13 @@ namespace Praktinis3
 
 
 
+
+
         private int pradiniuDuomenuTikrinimas(int paskolosTipas)
         {
 
 
+            // BÛSTO PASKOLA
             if (paskolosTipas == 1)
             {
                 if (this.textBox1.Text == "") this.textBox1.Text = "0";
@@ -179,9 +181,9 @@ namespace Praktinis3
                 if (this.textBox12.Text == "") this.textBox12.Text = "0";
 
 
-                
-                this.Vaiku_sk = Convert.ToInt32(this.textBox1.Text);
-                this.Vaiko_islaikymas = Convert.ToDouble(this.textBox5.Text);
+                //pradiniai duomenys
+                this.vaiku_skaicius = Convert.ToInt32(this.textBox1.Text);
+                this.vaiko_islaikimas = Convert.ToDouble(this.textBox5.Text);
                 this.seimos_pajamos = Convert.ToDouble(this.textBox2.Text);
                 this.seimos_skolos = Convert.ToDouble(this.textBox3.Text);
                 this.paskolos_suma = Convert.ToDouble(this.textBox4.Text);
@@ -193,62 +195,71 @@ namespace Praktinis3
                 this.sutartiesSudarymoMokestis(paskolosTipas);
                 this.metinesPalukanosSuma();
 
-                
-                if (this.Vaiku_sk < 0 || this.Vaiku_sk > 10)
+
+
+
+
+
+                // Vaikø skaièius
+                if (pimras())                // pirmas
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Vaikø skaièius nuo 0 iki 10!");
+                    MessageBox.Show("Vaikø skaièius gali bûti nuo 0 iki 10!");
                     return 1;
                 }
-                else if (this.Vaiko_islaikymas <= 0 && this.Vaiku_sk > 1)
+                else if (antras())      //antras
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Vaiko iðlaikymas > 0");
+                    MessageBox.Show("Vaiko iðlaikimo iðlaidos turi virðyti 0");    
                     return 1;
                 }
-                else if (this.Vaiko_islaikymas >= 1 && this.Vaiku_sk == 0)
+                else if (trecias())      // trecias
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Jûs neturite vaiku!");
+                    MessageBox.Show("Jûs negalite skirti vaikø iðlaikimui, nes jø neturite!");
                     return 1;
                 }
-                else if (this.seimos_pajamos < 0 || this.seimos_pajamos > 30000)
+                else if (ketvirtas())   //4
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Ðeimos pajamos nuo 0 iki 30000 €");
+                    MessageBox.Show("Ðeimos pajamos turi sudaryti nuo 0 iki 30000 €");
                     return 1;
                 }
-                else if (this.seimos_skolos < 0 || this.seimos_skolos > 15000)
+                else if (penktas())    // 5
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Ðeimos skola nuo 0 iki 15000 €");
+                    MessageBox.Show("Ðeimos skola turi sudaryti nuo 0 iki 15000 €");
                     return 1;
                 }
-                else if (this.paskolos_suma < 1)
+                else if (this.paskolos_suma < 1)                                    // 6
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Paskolos suma > 0!");
+                    MessageBox.Show("Paskolos suma turi bûti daugiau nei 0!");
                     return 1;
                 }
-                else if (this.paskolos_palukanos < 0 || this.paskolos_palukanos > 100)
+                else if (septintas()) //7
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Paskolos palûkanos nuo 0 iki 100%!");
+                    MessageBox.Show("Paskolos palûkanos turi sudaryti nuo 0 iki 100%!");
                     return 1;
                 }
-                else if (this.pastato_amzius > 40)
+                else if (astuntas())                                      //8
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Pastato amþius <= 40!");
+                    MessageBox.Show("Pastato amþius ne daugiau nei 40!");
                     return 1;
                 }
-                else if ((this.tikros_pajamos * 0.4) < this.menesineImoka())
+                else if (devintas())           //9
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Paskola negali bûti suteikta, nes jûs esate per daug iðsiskolines!");
                     return 1;
                 }
             }
+
+
+
+
             // VARTOJIMO KREDITAS
             if (paskolosTipas == 2)
             {
@@ -260,8 +271,8 @@ namespace Praktinis3
                 if (this.textBox13.Text == "") this.textBox13.Text = "0";
 
                 //pradiniai duomenys
-                this.Vaiku_sk = Convert.ToInt32(this.textBox7.Text);
-                this.Vaiko_islaikymas = Convert.ToDouble(this.textBox6.Text);
+                this.vaiku_skaicius = Convert.ToInt32(this.textBox7.Text);
+                this.vaiko_islaikimas = Convert.ToDouble(this.textBox6.Text);
                 this.seimos_pajamos = Convert.ToDouble(this.textBox8.Text);
                 this.seimos_skolos = Convert.ToDouble(this.textBox9.Text);
                 this.paskolos_suma = Convert.ToDouble(this.textBox10.Text);
@@ -273,49 +284,49 @@ namespace Praktinis3
                 this.metinesPalukanosSuma();
 
                 // Vaikø skaièius
-                if (this.Vaiku_sk < 0 || this.Vaiku_sk > 10)
+                if (pimras())              //pirmas
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Vaikø skaièius gali bûti nuo 0 iki 10!");
+                    MessageBox.Show("Vaikø skaièius gali bûti nuo 0 iki 10!");          
                     return 1;
                 }
-                else if (this.Vaiko_islaikymas <= 0 && this.Vaiku_sk > 1)
+                else if (antras())        //2
                 {
                     groupBox1.Hide();
-                    MessageBox.Show("Vaiko iðlaikimo iðlaidos turi virðyti 0");
+                    MessageBox.Show("Vaiko iðlaikimo iðlaidos turi virðyti 0");        
                     return 1;
                 }
-                else if (this.Vaiko_islaikymas >= 1 && this.Vaiku_sk == 0)
+                else if (trecias())        //3
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Jûs negalite skirti vaikø iðlaikimui, nes jø neturite!");
                     return 1;
                 }
-                else if (this.seimos_pajamos < 0 || this.seimos_pajamos > 10000)
+                else if (ketvirtas())        //4
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Ðeimos pajamos turi sudaryti nuo 0 iki 30000 €");
                     return 1;
                 }
-                else if (this.seimos_skolos < 0 || this.seimos_skolos > 5000)
+                else if (penktas())           //5
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Ðeimos skola turi sudaryti nuo 0 iki 15000 €");
                     return 1;
                 }
-                else if (this.paskolos_suma < 300 || this.paskolos_suma > 26000)
+                else if (sestas())            //6
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Paskolos suma turi bûti nuo 300 iki 26000 €!");
                     return 1;
                 }
-                else if (this.paskolos_palukanos < 0 || this.paskolos_palukanos > 100)
+                else if (septintas())          //7
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Paskolos palûkanos turi sudaryti nuo 0 iki 100%!");
                     return 1;
                 }
-                else if ((this.tikros_pajamos * 0.4) < this.menesineImoka())
+                else if (devintas())                    //9
                 {
                     groupBox1.Hide();
                     MessageBox.Show("Paskola negali bûti suteikta, nes jûs esate per daug iðsiskolines!");
@@ -508,9 +519,8 @@ namespace Praktinis3
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
 
-        }
+
+
     }
 }
